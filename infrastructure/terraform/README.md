@@ -9,7 +9,15 @@ Semantics platform on AWS.
   parameterized through the `control_plane_ingress_cidrs` variable so environments can restrict
   access to approved networks.
 - `modules/eks` provisions an Amazon EKS cluster, IAM roles, managed node groups, and an
-  OIDC provider for IRSA integrations.
+  OIDC provider for IRSA integrations. Control plane logging is enabled by default with
+  a 30-day retention period that can be overridden per environment.
+- `modules/monitoring` enables VPC flow logs, an Amazon CloudWatch alarm that monitors the
+  EKS cluster's failed node count, an SNS topic for alerting, and a baseline AWS X-Ray
+  sampling rule.
+- `modules/security` enables GuardDuty, Security Hub (with configurable standards), and
+  configures AWS Config to deploy a conformance pack that validates EKS logging and
+  GuardDuty enablement. The module also provisions or connects to an S3 bucket for
+  Config snapshots.
 
 Modules are designed to accept tags and generalized inputs so they can be reused for additional
 environments or cloned to other cloud providers in the future.

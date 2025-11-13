@@ -29,6 +29,24 @@ variable "cluster_version" {
   default     = "1.29"
 }
 
+variable "cluster_log_types" {
+  description = "EKS control plane log types to enable"
+  type        = list(string)
+  default = [
+    "api",
+    "audit",
+    "authenticator",
+    "controllerManager",
+    "scheduler"
+  ]
+}
+
+variable "cluster_log_retention_in_days" {
+  description = "Retention period in days for the EKS control plane CloudWatch log group"
+  type        = number
+  default     = 30
+}
+
 variable "tags" {
   description = "Common tags"
   type        = map(string)

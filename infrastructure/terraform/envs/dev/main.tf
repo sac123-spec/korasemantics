@@ -49,6 +49,8 @@ module "eks" {
   control_plane_security_group_id  = module.network.control_plane_security_group_id
   data_plane_security_group_id     = module.network.data_plane_security_group_id
   cluster_version                  = var.cluster_version
+  cluster_log_types                = var.cluster_log_types
+  cluster_log_retention_in_days    = var.cluster_log_retention_in_days
   tags                             = local.tags
   node_groups = {
     system = {
@@ -71,6 +73,32 @@ module "eks" {
       }
     }
   }
+}
+
+module "monitoring" {
+  source                       = "../../modules/monitoring"
+  name                         = local.name_prefix
+  vpc_id                       = module.network.vpc_id
+  eks_cluster_name             = module.eks.cluster_name
+  tags                         = local.tags
+  flow_log_retention_in_days   = var.monitoring_flow_log_retention_in_days
+  alarm_period                 = var.monitoring_alarm_period
+  alarm_evaluation_periods     = var.monitoring_alarm_evaluation_periods
+  alarm_threshold              = var.monitoring_alarm_threshold
+  notification_emails          = var.monitoring_notification_emails
+  xray_fixed_rate              = var.monitoring_xray_fixed_rate
+}
+
+module "security" {
+  source                              = "../../modules/security"
+  name                                = local.name_prefix
+  tags                                = local.tags
+  eks_cluster_name                    = module.eks.cluster_name
+  guardduty_finding_publishing_frequency = var.security_guardduty_finding_publishing_frequency
+  securityhub_enabled_standards       = var.securityhub_enabled_standards
+  config_logs_bucket_name             = var.security_config_logs_bucket_name
+  config_bucket_force_destroy         = var.security_config_bucket_force_destroy
+  conformance_pack_name               = var.security_conformance_pack_name
 }
 
 output "vpc_id" {
