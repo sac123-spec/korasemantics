@@ -44,3 +44,31 @@ It expects the following repository secrets/variables:
 
 Terraform runs `terraform fmt`, `plan`, and `apply` (on `main`) for both `dev` and `staging`
 environments using a build matrix.
+
+## Frontend Dashboard
+The repository now includes a TypeScript React dashboard under `ui/` that reads Terraform configuration to
+visualize environment modules.
+
+### Install Dependencies
+```bash
+cd ui
+npm install
+```
+
+### Run Locally
+```bash
+npm run dev
+```
+Vite runs the application on http://localhost:5173 by default. The dashboard loads Terraform module metadata at
+build time, so no additional backend is required for local development.
+
+### Connecting to Live Environment Data
+The dashboard currently mocks AWS runtime status responses. Once real APIs are available you can replace the
+mock adapter in `src/lib/adapters/mockAwsStatus.ts` with calls to your service (REST, GraphQL, etc.). When doing so:
+1. Expose an endpoint that aggregates module health by environment ID.
+2. Replace `getMockModuleStatus` with a fetch-based implementation that requests your endpoint.
+3. Ensure the API includes CORS headers so the Vite dev server (and production host) can reach it.
+4. Add environment variables (e.g., via Vite `.env` files) to point to the correct API base URL per environment.
+
+Because Terraform configuration is already bundled using `import.meta.glob`, the UI will automatically surface
+new environments or modules added under `infrastructure/terraform` without additional code changes.
