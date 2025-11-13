@@ -38,6 +38,12 @@ variable "private_subnet_cidrs" {
   }
 }
 
+variable "control_plane_ingress_cidrs" {
+  description = "CIDR blocks allowed to reach the control plane API"
+  type        = list(string)
+  default     = []
+}
+
 variable "tags" {
   description = "Common tags"
   type        = map(string)

@@ -106,12 +106,15 @@ resource "aws_security_group" "control_plane" {
   description = "Control plane security group"
   vpc_id      = aws_vpc.this.id
 
-  ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-    description = "API access"
+  dynamic "ingress" {
+    for_each = var.control_plane_ingress_cidrs
+    content {
+      from_port   = 443
+      to_port     = 443
+      protocol    = "tcp"
+      cidr_blocks = [ingress.value]
+      description = "API access"
+    }
   }
 
   egress {
