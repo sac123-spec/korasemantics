@@ -1,0 +1,31 @@
+Parameters:
+  EKSClusterNames:
+    Type: String
+    Description: Comma separated list of EKS clusters that must have control plane logging enabled.
+
+Resources:
+  EKSClusterLoggingEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: ensure-eks-control-plane-logging
+      Description: Ensure Amazon EKS control plane logging remains enabled.
+      InputParameters:
+        clusterNames: !Ref EKSClusterNames
+      Scope:
+        ComplianceResourceTypes:
+          - AWS::EKS::Cluster
+      Source:
+        Owner: AWS
+        SourceIdentifier: EKS_CLUSTER_LOGGING_ENABLED
+
+  GuardDutyEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: ensure-guardduty-enabled
+      Description: Verify GuardDuty detector is enabled in the account.
+      Scope:
+        ComplianceResourceTypes:
+          - AWS::GuardDuty::Detector
+      Source:
+        Owner: AWS
+        SourceIdentifier: GUARDDUTY_ENABLED_CENTRALIZED

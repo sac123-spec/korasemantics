@@ -2,6 +2,15 @@ data "aws_caller_identity" "current" {}
 
 data "aws_partition" "current" {}
 
+resource "aws_cloudwatch_log_group" "cluster" {
+  name              = "/aws/eks/${var.name}/cluster"
+  retention_in_days = var.cluster_log_retention_in_days
+
+  tags = merge(var.tags, {
+    Name = "${var.name}-cluster-logs"
+  })
+}
+
 resource "aws_iam_role" "cluster" {
   name = "${var.name}-cluster-role"
 
@@ -54,6 +63,8 @@ resource "aws_eks_cluster" "this" {
   role_arn = aws_iam_role.cluster.arn
   version  = var.cluster_version
 
+  enabled_cluster_log_types = var.cluster_log_types
+
   vpc_config {
     subnet_ids              = var.subnet_ids
     security_group_ids      = [aws_security_group.cluster.id, var.control_plane_security_group_id]
@@ -62,6 +73,8 @@ resource "aws_eks_cluster" "this" {
   }
 
   tags = var.tags
+
+  depends_on = [aws_cloudwatch_log_group.cluster]
 }
 
 resource "aws_iam_role" "node" {
@@ -168,4 +181,8 @@ output "cluster_ca" {
 
 output "oidc_provider_arn" {
   value = aws_iam_openid_connect_provider.this.arn
+}
+
+output "cluster_log_group_name" {
+  value = aws_cloudwatch_log_group.cluster.name
 }
