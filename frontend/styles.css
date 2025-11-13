@@ -1,0 +1,142 @@
+:root {
+  color-scheme: light dark;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #f5f7fb;
+  color: #1c2430;
+}
+
+header {
+  background: linear-gradient(120deg, #2e60f4, #652ff6);
+  color: white;
+  padding: 2rem 3rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+main {
+  padding: 2rem 3rem 4rem;
+}
+
+nav {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+nav button {
+  border: none;
+  background: white;
+  color: #2e60f4;
+  padding: 0.75rem 1.5rem;
+  border-radius: 999px;
+  font-weight: 600;
+  box-shadow: 0 8px 20px rgba(46, 96, 244, 0.25);
+  cursor: pointer;
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+nav button.active,
+nav button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 30px rgba(101, 47, 246, 0.4);
+}
+
+.section-card {
+  background: white;
+  border-radius: 18px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 12px 30px rgba(28, 36, 48, 0.08);
+}
+
+.section-card h2 {
+  margin-top: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.section-card table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.section-card th,
+.section-card td {
+  text-align: left;
+  padding: 0.75rem;
+  border-bottom: 1px solid rgba(28, 36, 48, 0.08);
+}
+
+.badge {
+  display: inline-flex;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  background: rgba(101, 47, 246, 0.1);
+  color: #652ff6;
+  font-weight: 600;
+}
+
+.asset-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.asset-card {
+  background: linear-gradient(160deg, rgba(46, 96, 244, 0.1), rgba(101, 47, 246, 0.15));
+  border-radius: 18px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.asset-card h3 {
+  margin: 0;
+}
+
+.asset-card ul {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  gap: 0.5rem;
+}
+
+input,
+select,
+textarea {
+  padding: 0.75rem;
+  border-radius: 12px;
+  border: 1px solid rgba(28, 36, 48, 0.15);
+}
+
+.lineage-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.lineage-item {
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  background: rgba(46, 96, 244, 0.12);
+  color: #2e60f4;
+  font-weight: 600;
+}
