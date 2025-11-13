@@ -14,6 +14,9 @@ Semantics platform on AWS.
 - `modules/monitoring` enables VPC flow logs, an Amazon CloudWatch alarm that monitors the
   EKS cluster's failed node count, an SNS topic for alerting, and a baseline AWS X-Ray
   sampling rule.
+- `modules/logging` provisions an organization-level, multi-region CloudTrail that writes to an
+  encrypted S3 archive, optionally streams events to CloudWatch Logs, and prepares IRSA
+  permissions so Fluent Bit can forward EKS audit records into the centralized log stores.
 - `modules/security` enables GuardDuty, Security Hub (with configurable standards), and
   configures AWS Config to deploy a conformance pack that validates EKS logging and
   GuardDuty enablement. The module also provisions or connects to an S3 bucket for

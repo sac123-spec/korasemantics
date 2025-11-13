@@ -92,6 +92,29 @@ module "eks" {
   }
 }
 
+module "logging" {
+  source                              = "../../modules/logging"
+  name                                = local.name_prefix
+  organization_id                     = var.organization_id
+  trail_name                          = coalesce(var.logging_trail_name, "${local.name_prefix}-org")
+  log_bucket_name                     = var.logging_log_bucket_name
+  log_bucket_force_destroy            = var.logging_force_destroy_log_bucket
+  kms_key_deletion_window_in_days     = var.logging_kms_key_deletion_window_in_days
+  enable_cloudwatch_logs              = var.logging_enable_cloudwatch_logs
+  cloudtrail_log_group_name           = var.logging_cloudtrail_log_group_name
+  cloudtrail_log_retention_in_days    = var.logging_cloudtrail_log_retention_in_days
+  cloudtrail_insight_selectors        = var.logging_cloudtrail_insight_selectors
+  enable_eks_audit_log_shipping       = var.logging_enable_eks_audit_log_shipping
+  create_dedicated_audit_log_group    = var.logging_create_dedicated_audit_log_group
+  eks_audit_log_group_name            = var.logging_eks_audit_log_group_name
+  eks_audit_log_retention_in_days     = var.logging_eks_audit_log_retention_in_days
+  create_eks_audit_irsa_role          = var.logging_enable_eks_audit_irsa_role
+  eks_oidc_provider_arn               = var.logging_enable_eks_audit_irsa_role ? module.eks.oidc_provider_arn : null
+  eks_audit_service_account_namespace = var.logging_eks_audit_service_account_namespace
+  eks_audit_service_account_name      = var.logging_eks_audit_service_account_name
+  tags                                = local.tags
+}
+
 module "monitoring" {
   source                       = "../../modules/monitoring"
   name                         = local.name_prefix
