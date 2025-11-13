@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kora Semantics Workspace</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Kora Semantics Workspace</h1>
+      <p>Discover assets, manage permissions, and explore lineage across every workspace.</p>
+    </header>
+    <main>
+      <nav>
+        <button data-tab="assets" class="active">Assets</button>
+        <button data-tab="permissions">Permissions</button>
+        <button data-tab="lineage">Lineage</button>
+      </nav>
+      <section id="assets" class="section-card"></section>
+      <section id="permissions" class="section-card" hidden></section>
+      <section id="lineage" class="section-card" hidden></section>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/htm@3.1.1/dist/htm.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/preact@10.19.2/dist/preact.umd.js"></script>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
