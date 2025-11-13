@@ -5,7 +5,9 @@ Semantics platform on AWS.
 
 ## Modules
 - `modules/network` provisions a VPC, public/private subnets, routing, NAT gateway, and security
-groups that separate control-plane and data-plane traffic.
+  groups that separate control-plane and data-plane traffic. Control plane ingress is
+  parameterized through the `control_plane_ingress_cidrs` variable so environments can restrict
+  access to approved networks.
 - `modules/eks` provisions an Amazon EKS cluster, IAM roles, managed node groups, and an
   OIDC provider for IRSA integrations.
 
@@ -20,3 +22,11 @@ environments or cloned to other cloud providers in the future.
 
 Each environment expects remote state configuration to be passed during `terraform init`.
 Use the GitHub Actions workflow or run the commands locally as described in the repository README.
+
+### Configuring control plane access
+
+Provide CIDR lists for the control plane API by updating `control_plane_ingress_cidrs` in each
+environment's `variables.tf`. For example, the development environment defaults to the VPC CIDR in
+`envs/dev/variables.tf`, while staging tightens access through the values in
+`envs/staging/variables.tf`. Override these defaults using a `*.tfvars` file or `-var` flags during
+`terraform apply` to match the network ranges for your deployment.
