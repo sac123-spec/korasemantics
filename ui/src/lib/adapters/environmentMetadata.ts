@@ -51,9 +51,10 @@ const parseModules = (content: string): EnvironmentModule[] => {
   return moduleBlocks.map((block) => {
     const attributes = parseAttributes(block.body);
     const sourceAttr = attributes.find((attr) => attr.key === 'source');
+    const source = sourceAttr?.value.trim().replace(/^"|"$/g, '').replace(/\\"/g, '"');
     return {
       name: block.name,
-      source: sourceAttr?.value.replace(/\"/g, ''),
+      source,
       attributes,
       rawBody: block.body,
     };
