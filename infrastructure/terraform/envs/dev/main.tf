@@ -37,6 +37,7 @@ module "network" {
   azs                    = local.azs
   public_subnet_cidrs    = var.public_subnet_cidrs
   private_subnet_cidrs   = var.private_subnet_cidrs
+  control_plane_ingress_cidrs = var.control_plane_ingress_cidrs
   tags                   = local.tags
 }
 

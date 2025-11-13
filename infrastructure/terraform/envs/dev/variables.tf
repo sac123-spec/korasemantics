@@ -28,6 +28,14 @@ variable "private_subnet_cidrs" {
   ]
 }
 
+variable "control_plane_ingress_cidrs" {
+  description = "CIDR blocks permitted to reach the EKS control plane"
+  type        = list(string)
+  default     = [
+    "10.10.0.0/16"
+  ]
+}
+
 variable "cluster_version" {
   description = "EKS version"
   type        = string
